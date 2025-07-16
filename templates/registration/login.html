@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 400px;">
+
+    {% if next %}
+        <div class="alert alert-warning">
+            You must log in to access that page.
+        </div>
+    {% endif %}
+
+    <h2 class="text-center mb-4">Login</h2>
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div class="form-floating mb-3">
+            <input type="text" name="username" id="id_username"
+                class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+                placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
+            <label for="id_username">Username</label>
+            {% for error in form.username.errors %}
+                <div class="invalid-feedback">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Password -->
+        <div class="form-floating mb-3 position-relative">
+            <input type="password" name="password" id="id_password"
+                class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                placeholder="Password">
+            <label for="id_password">Password</label>
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary position-absolute top-50 end-0 translate-middle-y me-2"
+                    onclick="togglePassword('id_password', this)">
+                <i class="fa fa-eye"></i>
+            </button>
+            {% for error in form.password.errors %}
+                <div class="invalid-feedback d-block">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Log In</button>
+
+        <!-- Forgot password and register link -->
+        <div class="text-center mt-3">
+            <a href="{% url 'password_reset' %}" class="btn btn-link text-danger">Forgot Password?</a><br>
+            <span>Don't have an account?</span> <a href="{% url 'register' %}">Register</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+function togglePassword(id, btn) {
+    const input = document.getElementById(id);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll("input.form-control.is-invalid");
+
+    inputs.forEach(function (input) {
+        input.addEventListener("input", function () {
+        input.classList.remove("is-invalid");
+
+        // Hide the error message below it
+            const feedback = input.parentElement.querySelector(".invalid-feedback");
+            if (feedback) {
+                feedback.remove();
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

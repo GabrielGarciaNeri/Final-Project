@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Learn a New Word{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Learn a New Word</h2>
+
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" name="word" class="form-control" placeholder="Enter a word" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-check">
+                <input type="radio" class="form-check-input" name="mode" value="definition" checked> Definition + Example in English
+            </label><br>
+            <label class="form-check">
+                <input type="radio" class="form-check-input" name="mode" value="quiz"> Generate a Quiz
+            </label><br>
+            <label class="form-check">
+                <input type="radio" class="form-check-input" name="mode" value="translate"> Translate in Spanish, French, and Japanese
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    {% if result %}
+        <div class="card p-3">
+            <h4>Result:</h4>
+            <pre id="output">{{ result }}</pre>
+            <button onclick="speak()" class="btn btn-secondary mt-2">🔊 Listen</button>
+        </div>
+    {% endif %}
+
+    <script>
+        function speak() {
+            const text = document.getElementById('output').innerText;
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "en-US";
+            speechSynthesis.speak(speech);
+        }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Created{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>🎉 Welcome aboard!</h2>
+    <p>Your account has been created successfully.</p>
+    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Log In</a>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Learn a Language{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+            <h1 class="display-4 fw-bold">Welcome to Learn a Language!</h1>
+            <p class="lead mt-3">
+                Practice vocabulary, get instant definitions, translate words into multiple languages, and take fun quizzes — all powered by AI and humor!
+            </p>
+            {% if user.is_authenticated %}
+                <a href="{% url 'learn' %}" class="btn btn-primary btn-lg mt-3">Start Learning</a>
+            {% else %}
+                <a href="{% url 'register' %}" class="btn btn-success btn-lg mt-3 me-2">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg mt-3">Log In</a>
+            {% endif %}
+        </div>
+        <div class="col-md-6 mt-5 mt-md-0 text-center">
+            <img src="{% static 'img/1.jpg' %}" alt="Language Learning" class="img-fluid rounded">
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row text-center">
+        <div class="col-md-4">
+            <i class="fas fa-language fa-3x text-primary mb-3"></i>
+            <h4>Multilingual Translation</h4>
+            <p>Translate any word into Spanish, French, Japanese, and more — with pronunciation tips included.</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-brain fa-3x text-success mb-3"></i>
+            <h4>Smart AI Quizzes</h4>
+            <p>Take funny, personalized quizzes to test what you've learned. Reinforce your memory while having fun!</p>
+        </div>
+        <div class="col-md-4">
+            <i class="fas fa-book-open fa-3x text-warning mb-3"></i>
+            <h4>Definitions + Examples</h4>
+            <p>Instantly get clear, simple definitions and sample sentences that make sense — even with jokes!</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

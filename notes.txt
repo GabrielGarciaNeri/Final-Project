@@ -1,0 +1,11 @@
+# After we create a new app 
+
+1 - register the app on settings
+
+2 - create a urls for the app
+
+3 - register that url in configs urls
+
+
+
+<img src="{% static './img/' %}" alt="random img"> #type this to add a image in html
