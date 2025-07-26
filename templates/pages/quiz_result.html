@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Quiz Result{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Quiz Completed!</h2>
+    <p class="mb-4">You scored {{ score }} out of {{ total }}.</p>
+
+    {% for q in questions %}
+        {% with key=q.id|stringformat:"s" %}
+            {% with selected=quiz.user_answers|get_item:key %}
+                <div class="mb-4 p-3 border {% if selected == q.answer %}border-success{% else %}border-danger{% endif %}">
+                    <strong>Q{{ forloop.counter }}: {{ q.question }}</strong><br>
+
+                    {% for opt in q.options %}
+                        {% with opt_letter=opt|slice:":1" %}
+                            <div>
+                                {{ opt }}
+                                {% if selected == opt_letter %}
+                                    <strong class="text-primary">← Your answer</strong>
+                                {% endif %}
+                                {% if opt_letter == q.answer %}
+                                    <strong class="text-success">← Correct answer</strong>
+                                {% endif %}
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endwith %}
+        {% endwith %}
+    {% endfor %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'quiz_history' %}" class="btn btn-primary">Back to My Quizzes</a>
+    </div>
+</div>
+{% endblock %}

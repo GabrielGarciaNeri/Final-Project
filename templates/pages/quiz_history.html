@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}My Quizzes{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>My Saved Quizzes</h2>
+
+    {% if quizzes %}
+        <ul class="list-group mt-4">
+            {% for quiz in quizzes %}
+                <li class="list-group-item">
+                    <strong>{{ quiz.word }}</strong><br>
+                    <small>Created on {{ quiz.created_at|date:"M d, Y H:i" }}</small><br>
+                    {% if quiz.score is not None %}
+                        <span>Score: {{ quiz.score }}/3</span>
+                    {% endif %}
+
+                    <div class="mt-3">
+                        {% if quiz.user_answers %}
+                            {% for q in quiz.parsed_questions %}
+                                {% with quiz.user_answers|get_item:q.id|stringformat:"s" as selected %}
+                                <div class="mb-4 p-3 border {% if selected == q.answer %}border-success{% else %}border-danger{% endif %}">
+                                    <strong>Q{{ forloop.counter }}: {{ q.question }}</strong><br>
+
+                                    {% for opt in q.options %}
+                                        {% with opt_letter=opt|slice:":1" %}
+                                            <div>
+                                                {{ opt }}
+                                                {% if selected == opt_letter %}
+                                                    <strong class="text-primary">← Your answer</strong>
+                                                {% endif %}
+                                                {% if opt_letter == q.answer %}
+                                                    <strong class="text-success">← Correct answer</strong>
+                                                {% endif %}
+                                            </div>
+                                        {% endwith %}
+                                    {% endfor %}
+                                </div>
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">You didn't complete this quiz.</p>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't created any quizzes yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

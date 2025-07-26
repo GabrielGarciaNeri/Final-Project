@@ -35,3 +35,17 @@ input[type="password"] {
     padding-top: 1.2rem;
     padding-bottom: 0.5rem;
 }
+
+.border-success {
+    border: 2px solid #28a745;
+    background-color: #eafaf1;
+}
+.border-danger {
+    border: 2px solid #dc3545;
+    background-color: #fdeaea;
+}
+
+.center-btn {
+    display: flex;
+    justify-content: center;
+}

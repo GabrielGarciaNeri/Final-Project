@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block title %}Take Quiz{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Quiz: {{ quiz.word }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% for q in questions %}
+            
+                    <div class="mb-4 p-3 border border-secondary">
+                        <strong>Q{{ forloop.counter }}: {{ q.question }}</strong><br>
+
+                        {% for opt in q.options %}
+                            {% with opt_letter=opt|slice:":1" %}
+                                <div>
+                                    <label>
+                                        <input type="radio" name="q{{ q.id }}" value="{{ opt_letter }}" required>
+                                        {{ opt }}
+                                    </label>
+                                </div>
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                
+        {% endfor %}
+        <div class="center-btn">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

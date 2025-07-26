@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from .views import register_view
+from .views import take_quiz_view
 
 
 urlpatterns = [
@@ -13,6 +14,7 @@ urlpatterns = [
     #AI pages
     path('learn/', views.learn_view, name='learn'),
     path('history/', views.quiz_history, name='quiz_history'),
+    path("take-quiz/<int:quiz_id>/", take_quiz_view, name="take_quiz"),
 
     #login/logout/register pages
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
