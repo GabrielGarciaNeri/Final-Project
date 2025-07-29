@@ -8,6 +8,12 @@
     <h2>Quiz Completed!</h2>
     <p class="mb-4">You scored {{ score }} out of {{ total }}.</p>
 
+    {% if intro %}
+        <div class="alert alert-secondary mb-4">
+            <pre style="white-space: pre-wrap;">{{ intro }}</pre>
+        </div>
+    {% endif %}
+
     {% for q in questions %}
         {% with key=q.id|stringformat:"s" %}
             {% with selected=quiz.user_answers|get_item:key %}
@@ -31,6 +37,12 @@
             {% endwith %}
         {% endwith %}
     {% endfor %}
+    
+    {% if outro %}
+        <div class="alert alert-secondary mt-4">
+            <pre style="white-space: pre-wrap;">{{ outro }}</pre>
+        </div>
+    {% endif %}
 
     <div class="text-center mt-4">
         <a href="{% url 'quiz_history' %}" class="btn btn-primary">Back to My Quizzes</a>

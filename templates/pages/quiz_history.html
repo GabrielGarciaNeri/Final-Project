@@ -7,6 +7,7 @@
 <div class="container mt-5">
     <h2>My Saved Quizzes</h2>
 
+
     {% if quizzes %}
         <ul class="list-group mt-4">
             {% for quiz in quizzes %}
@@ -40,6 +41,7 @@
                                 </div>
                                 {% endwith %}
                             {% endfor %}
+
                         {% else %}
                             <p class="text-muted">You didn't complete this quiz.</p>
                         {% endif %}

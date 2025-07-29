@@ -3,8 +3,28 @@
 {% block title %}Contact{% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Contact Me</h2>
+    <p>If you have any questions, suggestions, or just want to say hello, feel free to reach out.</p>
 
-<div>
-    <h1>Contact me</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
 </div>
 {% endblock %}

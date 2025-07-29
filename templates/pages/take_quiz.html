@@ -7,6 +7,13 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Quiz: {{ quiz.word }}</h2>
+
+    {% if intro %}
+        <div class="alert alert-secondary mb-4">
+            <em>{{ intro }}</em>
+        </div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
         {% for q in questions %}
@@ -27,9 +34,18 @@
                     </div>
                 
         {% endfor %}
+        
+        {% if outro %}
+            <div class="alert alert-secondary">
+                <em>{{ outro }}</em>
+            </div>
+        {% endif %}
+
         <div class="center-btn">
             <button type="submit" class="btn btn-success">Submit</button>
         </div>
     </form>
+
 </div>
+
 {% endblock %}
