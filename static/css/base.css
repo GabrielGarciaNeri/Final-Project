@@ -73,6 +73,10 @@ input[type="password"] {
         z-index: 998;
     }
 
+    .navbar-toggler {
+        margin-left: auto; /* aligns to left */
+    }
+
     /* Display backdrop when nav is open */
     .navbar-collapse.show + .navbar-backdrop {
         display: block;
